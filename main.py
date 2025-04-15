@@ -10,9 +10,8 @@ def webhook_verify():
     token = request.args.get("hub.verify_token")
     challenge = request.args.get("hub.challenge")
 
-    if mode == "subscribe" and token == VERIFY_TOKEN:
-        response = make_response(challenge, 200)
+    if mode and token and mode == "subscribe" and token == VERIFY_TOKEN:
+        response = make_response(str(challenge), 200)
         response.mimetype = "text/plain"
         return response
-    else:
-        return "Forbidden", 403
+    return "Forbidden", 403
